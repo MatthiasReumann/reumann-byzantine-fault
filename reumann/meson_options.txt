@@ -1,0 +1,4 @@
+
+option('doctest_include_dir', type : 'string', value : '')
+option('cli11_include_dir', type : 'string', value : '')
+option('spdlog_include_dir', type : 'string', value : '')

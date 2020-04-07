@@ -3,6 +3,7 @@
 \usepackage[german]{babel}
 \usepackage{graphicx}
 \usepackage{enumitem}
+\usepackage{listings}
 \usepackage{float}
 \graphicspath{ {./img/} }
 
@@ -158,10 +159,37 @@ folgende Annahmen getroffen: \\
     \item Fehlende Nachrichten können erkannt werden
 \end{itemize}
 
+Der Algorithmus funktioniert nur wenn ein General mit jedem anderen General 
+direkt miteinander kommunzieren kann. Ein Verräter-Commander könnte auch 
+keinen Befehl an seine Leutnants senden, daher ist der Standardbefehl in diesem 
+Fall \textit{RÜCKZUG}.
+
+\begin{lstlisting}[caption=Algorithmus OM(0)]
+1) Commander sendet seinen Wert v0 an alle Leutnants
+2) Jeder Leutnant verwendet den Wert v0 oder 
+  falls dieser nicht vorhanden ist den Standardbefehl
+\end{lstlisting}
+
+\medskip
+
+\begin{lstlisting}[caption=Algorithmus OM(m) m > 0]
+1) Commander sendet seinen Wert v0 an alle Leutnants
+2) Für jedes i gilt:
+    vi := Wert den General i vom Commander erhalten hat 
+    (oder Standardbefehl)
+    General i agiert wie der Commander im OM(m-1) um seinen 
+    Wert vi den anderen n-2 Generälen zu senden
+
+3) Für jedes i mit j != i gilt:
+    vj := Wert den General i von General j in Schritt 2 erhalten hat
+    General i benutzt die Funktion majority(v1, vn-1)
+\end{lstlisting}
+
+Die Funktion \textit{majority} ermittelt die absolute Mehrheit. 
+Es muss nicht immer die absolute Mehrheit als Entscheidungsfunktion verwendet werden.
+
 
 \iffalse
-
-\subsection{Lösung}
 
 \subsection{Kritik}
 

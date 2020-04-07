@@ -25,7 +25,6 @@
 
 \newpage
 
-\iffalse
 \section{Byzantinische Fehler}
 
 \subsection{Definition}
@@ -39,37 +38,15 @@ unterscheidet werden können. \cite{esraberlin}
 
 Den Namen hat diese Fehlerklasse im Jahr 1982 von Lamport et. al. im 
 Papier \textit{The Byzantine Generals Problem} erhalten.\cite{generals}
-In diesem werden Byzantinische Fehler durch das abstrakte Beispiel 
-der Byzantinischen Generäle beschrieben, dass im Abschnitt \ref{sec:generals} genauer erläutert wird.
+In diesem werden Byzantinische Fehler durch das abstrakte Beispiel der Byzantinischen Generäle näher erklärt.
 
-\subsection{Problem}
-
-Man stelle sich $n$ unabhängige Sensoren eines Notbremsassistenten vor, die miteinander kommunzieren.
-Dabei werden nur Nachrichten \textit{STOP} oder \textit{OK} gesendet. Sobald einer der Sensoren, 
-einen Wert misst, der unter eine Schranke $s$ fällt, teilt er dies den anderen $n-1$ Sensoren mit.
-
-\medskip 
-
-Hierbei ist die Aufgabe der Sensoren, eine gemeinsame Entscheidung zu fällen, ob gebremst werden soll. 
-Oftmals wird dafür die absolute Mehrheit der Nachrichten verwendet. Diese Vorgehensweise funktioniert 
-solange, bis ein Sensor fehlerhafte Informationen übermittelt, da keiner Sensoren die Fähigkeit besitzt die 
-erhaltenen Informationen auf ihre Richtigkeit zu prüfen. Das könnte zu einer Fehlentscheidung führen 
-und in Beispielen, wie dem Notbremsassistenten, fatale Folgen haben. 
-
-\medskip 
-
-Ein Beispiel eines solchen Byzantinischen Fehlers kann in Abbildung \ref{fig:example} gesehen werden. 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{byz-sensor-example.png}
-    \caption{Sensornetzwerk mit fehlerhaftem Sensor 3. Für Sensor 2 ist es nicht möglich eine eindeutige Entscheidung zu treffen.}
-    \label{fig:example}
-\end{figure}
-
-\medskip 
-
-\fi
+\subsection{Anwendungen}
+Da eine Fehlentscheidung katastrophale Folgen hätte, wird in Boeing Flugzeugsystemen 
+Byzantinische Fehlern eine hohe Bedeutung zugewiesen.
+Das Raumfahrtunternehmen SpaceX setzt auch auf BFT in ihren Dragon Raumschiffen, 
+welche Astronauten zur ISS transportieren sollen. 
+Die Cryptowährung Bitcoin verwendet auch BFT Implementieren um die Integrität 
+der Blockchain ihrer gewährleisten. 
 
 \section{Problem der byzantinischen Generäle}
 \label{sec:generals}
@@ -188,6 +165,12 @@ Fall \textit{RÜCKZUG}.
 Die Funktion \textit{majority} ermittelt die absolute Mehrheit. 
 Es muss nicht immer die absolute Mehrheit als Entscheidungsfunktion verwendet werden.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{omalgo.png}
+    \caption{L3 ist der Verräter. Der Algorithmus garantiert, dass beide loyalen Leutnants (L1 und L2) die gleiche Entscheidung treffen: \textit{ANGRIFF}. }
+    \label{fig:OMAlgorithm}
+\end{figure}
 
 \iffalse
 

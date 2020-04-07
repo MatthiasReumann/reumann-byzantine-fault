@@ -3,6 +3,7 @@
 \usepackage[german]{babel}
 \usepackage{graphicx}
 \usepackage{enumitem}
+\usepackage{float}
 \graphicspath{ {./img/} }
 
 \setlength{\parindent}{0pt}
@@ -97,33 +98,60 @@ bestimmt. Allerdings könnte es sein, dass loyale Generäle unterschiedliche \te
 erhalten, da ein Verräter unterschiedliche Werte zu unterschiedlichen Generälen sendet, 
 was widerum Punkt A widerspricht. 
 
+\medskip 
+
 Deshalb müssen sogennante \textit{interactive consistency}-Bedingungen gelten.
-Ein führender General, auch "Commander" gennant, sendet einen Befehl an seine $n - 1$ Leutnant 
+Ein führender General, auch Commander gennant, sendet einen Befehl an seine $n - 1$ Leutnant 
 Generäle so, dass:
 
 \smallskip 
 
 \begin{tabular}{l l}
-IC1 & Alle loyalen Leutants den gleichen Befehl ausführen \\
+IC1 & Alle loyalen Leutnants den gleichen Befehl ausführen \\
 IC2 & Wenn der Commander loyal ist, dann befolgt jeder loyale Leutnant seinen Befehl
 \end{tabular}
 
-\iffalse
+\medskip
+Nun wird ein Bespiel beschrieben, in dem drei Generäle miteinander kommunzieren. 
+Wichtig dabei ist, dass niemand der loyalen Generäle weiß wer der Verräter ist.
+
+In Abbildung \ref{fig:general1} wird die Situtation beschrieben, 
+in der Leutnant 2 der Verräter ist. Dabei sendet der loyale Commander
+den Befehl \textit{ANGRIFF} an beide Leutnants. L2 sendet L1 die Nachricht,
+er habe den Befehl \textit{RÜCKZUG} erhalten. Um IC2 zu erfüllen, muss L1 jedoch
+den Befehl des Commanders ausführen. 
 
 \medskip 
 
-Dabei kann durch Widerspruch bewiesen werden, dass die Anzahl der Generäle $n$ größer als $3m + 1$ sein muss, wobei $m$ die Anzahl der 
-Verräter ist.
-
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{general1.png}
-    \hfill
-    \includegraphics[width=0.45\textwidth]{general2.png}
-    \caption{Zeigt, dass es nicht möglich ist eine Lösung zu finden, wenn ein Drittel der Generäle, Verräter sind. 
-            Der Verräter ist in beiden Abbildungen rot markiert.}
-    \label{fig:generals}
+    \includegraphics[width=0.7\textwidth]{general1.png}
+    \caption{todo}
+    \label{fig:general1}
 \end{figure}
+
+\medskip
+
+Im nächsten Szenario (Abbildung \ref{fig:general2}) ist der Commander der Verräter. Dieser sendet unterschiedliche 
+Befehle an seine Leutnants. Für L1 ist es die exakt selbe Situation 
+wie in Abbildung \ref{fig:general1} beschrieben: Um IC2 zu erfüllen muss er den Befehl
+\textit{ANGRIFF} ausführen. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{general2.png}
+    \caption{todo}
+    \label{fig:general2}
+\end{figure}
+
+Hierbei liegt aber das Problem. Die gleiche Argumentation muss demnach für L2
+verwendet werden, der den Befehl \textit{RÜCKZUG} ausführt. Dies widerspricht jedoch 
+IC1. Es existiert daher keine Lösung für drei Generäle mit einem Verräter.  
+
+
+\iffalse
+
+Die Anzahl der Generäle $n$ muss größer oder gleich $3m + 1$ sein, wobei $m$ die Anzahl der Verräter ist.
 
 \medskip 
 

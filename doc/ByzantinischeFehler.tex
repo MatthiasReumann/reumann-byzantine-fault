@@ -111,53 +111,55 @@ IC1 & Alle loyalen Leutnants den gleichen Befehl ausführen \\
 IC2 & Wenn der Commander loyal ist, dann befolgt jeder loyale Leutnant seinen Befehl
 \end{tabular}
 
+\subsection{Beispiel mit drei Generälen}
+In diesem Abschnitt wird ein Bespiel beschrieben in dem drei Generäle miteinander kommunzieren. 
+Wichtig dabei ist, dass niemand der loyalen Generäle weiß wer der Verräter ist. 
+
 \medskip
-Nun wird ein Bespiel beschrieben, in dem drei Generäle miteinander kommunzieren. 
-Wichtig dabei ist, dass niemand der loyalen Generäle weiß wer der Verräter ist.
 
-In Abbildung \ref{fig:general1} wird die Situtation beschrieben, 
-in der Leutnant 2 der Verräter ist. Dabei sendet der loyale Commander
-den Befehl \textit{ANGRIFF} an beide Leutnants. L2 sendet L1 die Nachricht,
-er habe den Befehl \textit{RÜCKZUG} erhalten. Um IC2 zu erfüllen, muss L1 jedoch
+In Abbildung \ref{fig:general1} ist Leutnant 2 (L2) der Verräter. Der loyale Commander
+sendet den Befehl \textit{ANGRIFF} an beide Leutnants L1 und L2. Zur Verifizierung sendet L2 L1 die Nachricht,
+er habe den Befehl \textit{RÜCKZUG} erhalten. Um die IC2 zu erfüllen, muss L1 jedoch
 den Befehl des Commanders ausführen. 
-
-\medskip 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{general1.png}
-    \caption{todo}
+    \caption{L2 ist der Verräter. L1 muss den Befehl des Commanders auführen um die IC2 einzuhalten.}
     \label{fig:general1}
 \end{figure}
 
-\medskip
-
 Im nächsten Szenario (Abbildung \ref{fig:general2}) ist der Commander der Verräter. Dieser sendet unterschiedliche 
-Befehle an seine Leutnants. Für L1 ist es die exakt selbe Situation 
-wie in Abbildung \ref{fig:general1} beschrieben: Um IC2 zu erfüllen muss er den Befehl
-\textit{ANGRIFF} ausführen. 
+Befehle an L1 und L2. Für L1 ist es die exakt selbe Situation 
+wie in Abbildung \ref{fig:general1}: Um die IC2 zu erfüllen muss er den Befehl \textit{ANGRIFF} ausführen. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{general2.png}
-    \caption{todo}
+    \caption{Der Commander ist der Verräter. Für L1 ist es die selbe Situtation wie in Abbildung \ref{fig:general1}.}
     \label{fig:general2}
 \end{figure}
 
 Hierbei liegt aber das Problem. Die gleiche Argumentation muss demnach für L2
 verwendet werden, der den Befehl \textit{RÜCKZUG} ausführt. Dies widerspricht jedoch 
-IC1. Es existiert daher keine Lösung für drei Generäle mit einem Verräter.  
+IC1. Es existiert daher keine Lösung für drei Generäle mit einem Verräter. 
+Um einen byzantinischen Fehler zu erkennen muss daher folgende Eigenschaft gelten: $n \geq 3m + 1$, 
+wobei n die Anzahl der Generäle und m die Anzahl der Verräter in diesem System ist.
+
+\subsection{Lösung}
+
+Eine mögliche Lösung dieses Problems bietet der Oral-Message-Algorithmus, kurz OM-Algorithmus. Der
+Algorithmus funkioniert für Systeme die die Eigenschaft $n \geq 3m + 1$ erfüllen. Außerdem werden 
+folgende Annahmen getroffen: \\
+
+\begin{itemize}
+    \item Jede Nachricht wird korrekt empfangen 
+    \item Der Empfänger kann sicherstellen von wem die Nachricht versendet wurde 
+    \item Fehlende Nachrichten können erkannt werden
+\end{itemize}
 
 
 \iffalse
-
-Die Anzahl der Generäle $n$ muss größer oder gleich $3m + 1$ sein, wobei $m$ die Anzahl der Verräter ist.
-
-\medskip 
-
-General G1 stellt in den beiden Beispielen den Commander dar, der Befehle an seine Leutants G2 und G3 schickt. 
-In beiden Fällen möchte G3 erfahren, welche Nachricht G2 von G1 erhalten hat. Hierbei spielt es keine Rolle ob G1 oder G2 
-der Verräter ist, denn in beiden Fällen kann G3 keine eindeutige Entscheidung treffen.  
 
 \subsection{Lösung}
 

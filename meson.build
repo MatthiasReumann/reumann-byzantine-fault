@@ -1,25 +1,24 @@
-project('XXX', 'cpp',
+project('byzantine', 'cpp',
         license : ['Boost'],
         version : '0.1',
         default_options : ['cpp_std=c++17', 'warning_level=3', 'werror=true'])
 
-inc_dir = include_directories(['include'])
-#                               get_option('json_include_dir')])
+inc_dir = include_directories(['include', get_option('asio_include_dir')])
 
-src = ['src/main.cpp'
-      ]
+threadd = dependency('threads')
 
-executable('XXX',
-           sources : src,
+commander_src = ['src/commander/main.cpp']
+
+executable('commander',
+           sources : commander_src,
+           dependencies: threadd,
            include_directories : inc_dir
           )
 
-#doctest_dir = include_directories([get_option('doctest_include_dir')])
+leutnant_src = ['src/leutnant/main.cpp']
 
-#test_src = ['tests/test1.cpp']
-
-#test_exe = executable('test1',
-#                      sources : test_src,
-#                      include_directories : [inc_dir, doctest_dir])
-
-#test('test1', test_exe)
+executable('leutnant',
+           sources : leutnant_src,
+            dependencies: threadd,
+           include_directories : inc_dir
+          )

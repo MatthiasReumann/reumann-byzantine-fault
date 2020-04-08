@@ -45,8 +45,8 @@ Da eine Fehlentscheidung katastrophale Folgen hätte, wird in Boeing Flugzeugsys
 Byzantinische Fehlern eine hohe Bedeutung zugewiesen.
 Das Raumfahrtunternehmen SpaceX setzt auch auf BFT in ihren Dragon Raumschiffen, 
 welche Astronauten zur ISS transportieren sollen. 
-Die Cryptowährung Bitcoin verwendet auch BFT Implementieren um die Integrität 
-der Blockchain ihrer gewährleisten. 
+Die Cryptowährung Bitcoin verwendet auch BFT Implementierungen um die Integrität 
+ihrer Blockchain zu gewährleisten. 
 
 \section{Problem der byzantinischen Generäle}
 \label{sec:generals}
@@ -74,12 +74,12 @@ Nachricht gesendet vom $i$.ten General. Jeder General erhält die Nachrichten
 Die finale Entscheidung wird durch die absolute Mehrheit der Werte dieser Nachrichten
 bestimmt. Allerdings könnte es sein, dass loyale Generäle unterschiedliche \textit{v(i)}
 erhalten, da ein Verräter unterschiedliche Werte zu unterschiedlichen Generälen sendet, 
-was widerum Punkt A widerspricht. 
+was widerum Punkt a widerspricht. 
 
 \medskip 
 
-Deshalb müssen sogennante \textit{interactive consistency}-Bedingungen gelten.
-Ein führender General, auch Commander gennant, sendet einen Befehl an seine $n - 1$ Leutnant 
+Deshalb müssen sogennante \textit{interactive consistency conditions} gelten.
+Ein führender General, auch Commander genannt, sendet einen Befehl an seine $n - 1$ Leutnant 
 Generäle so, dass:
 
 \smallskip 
@@ -90,15 +90,16 @@ IC2 & Wenn der Commander loyal ist, dann befolgt jeder loyale Leutnant seinen Be
 \end{tabular}
 
 \subsection{Beispiel mit drei Generälen}
-In diesem Abschnitt wird ein Bespiel beschrieben in dem drei Generäle miteinander kommunzieren. 
+In diesem Abschnitt wird eine Situation beschrieben in der drei Generäle miteinander kommunzieren. 
 Wichtig dabei ist, dass niemand der loyalen Generäle weiß wer der Verräter ist. 
 
 \medskip
 
 In Abbildung \ref{fig:general1} ist Leutnant 2 (L2) der Verräter. Der loyale Commander
 sendet den Befehl \textit{ANGRIFF} an beide Leutnants L1 und L2. Zur Verifizierung sendet L2 L1 die Nachricht,
-er habe den Befehl \textit{RÜCKZUG} erhalten. Um die IC2 zu erfüllen, muss L1 jedoch
-den Befehl des Commanders ausführen. 
+er habe den Befehl \textit{RÜCKZUG} erhalten. 
+L1 hat nun die Nachrichten \textit{ANGRIFF} und \textit{RÜCKZUG} und 
+kann auf Grund dessen keine eindeutige Entscheidung treffen.
 
 \begin{figure}[H]
     \centering
@@ -109,7 +110,7 @@ den Befehl des Commanders ausführen.
 
 Im nächsten Szenario (Abbildung \ref{fig:general2}) ist der Commander der Verräter. Dieser sendet unterschiedliche 
 Befehle an L1 und L2. Für L1 ist es die exakt selbe Situation 
-wie in Abbildung \ref{fig:general1}: Um die IC2 zu erfüllen muss er den Befehl \textit{ANGRIFF} ausführen. 
+wie in Abbildung \ref{fig:general1}. L2 steht vor dem selben Problem.
 
 \begin{figure}[H]
     \centering
@@ -118,11 +119,9 @@ wie in Abbildung \ref{fig:general1}: Um die IC2 zu erfüllen muss er den Befehl 
     \label{fig:general2}
 \end{figure}
 
-Hierbei liegt aber das Problem. Die gleiche Argumentation muss demnach für L2
-verwendet werden, der den Befehl \textit{RÜCKZUG} ausführt. Dies widerspricht jedoch 
-IC1. Es existiert daher keine Lösung für drei Generäle mit einem Verräter. 
+Wie aus diesem Beispiel hervorgeht, existiert keine Lösung für drei Generäle mit einem Verräter. 
 Um einen byzantinischen Fehler zu erkennen muss daher folgende Eigenschaft gelten: $n \geq 3m + 1$, 
-wobei n die Anzahl der Generäle und m die Anzahl der Verräter in diesem System ist.
+wobei $n$ die Anzahl der Generäle und $m$ die Anzahl der Verräter in diesem System ist.
 
 \subsection{Lösung}
 
@@ -172,19 +171,8 @@ Es muss nicht immer die absolute Mehrheit als Entscheidungsfunktion verwendet we
     \label{fig:OMAlgorithm}
 \end{figure}
 
-\iffalse
-
 \subsection{Kritik}
 
 Der OM-Algorithmus ist sehr aufwendig. Er ist praktisch nicht für große $n$ und $m$ einsetzbar.  
-
-\subsection{Beispiel}
-
-\newpage 
-
-\printbibliography
-
-\fi
-
 
 \end{document}

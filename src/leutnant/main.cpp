@@ -2,44 +2,46 @@
 #include <string>
 #include <future>
 #include "asio.hpp"
+#include "message_utils.h"
 
 using namespace std;
 using namespace asio::ip;
 
-void sender(promise<string>& p){
-    cout << "sender starting" << endl;
-    string order = p.get_future().get();
-    cout << "starting to send: " << order << endl;
-}
+class Lieutenant{
+    public:
+        Lieutenant(unsigned short port, string neighbour_port) : port{port}, neighbour_port{neighbour_port}{}
 
-void reciever(unsigned short port, promise<string>& p){
-    asio::io_context ctx;
-    tcp::endpoint ep{tcp::v4(), port};
-    tcp::acceptor acceptor{ctx, ep};
-    acceptor.listen();
+        void operator()(){
+            asio::io_context ctx;
+            tcp::endpoint ep{tcp::v4(), this->port};
+            tcp::acceptor acceptor{ctx, ep};
+            acceptor.listen();
 
-    cout << "waiting for order..." << endl;
+            cout << "waiting for order..." << endl;
 
-    tcp::socket sock{ctx};
-    acceptor.accept(sock);
-    tcp::iostream strm{move(sock)};
+            tcp::socket com_sock{ctx};
+            acceptor.accept(com_sock);
+            string com_order = message_utils::recieve_message(move(com_sock));
+            cout << "commanders order is: " << com_order << endl;
 
-    string data;
-    strm >> data;
-    cout << "order recieved: " << data << endl;
-    p.set_value(data);
-    strm.close();
-}
+            thread t{message_utils::send_message, com_order, this->neighbour_port};
+            t.detach();
 
-int main(int argc, char* argv[]){
-    if(argc >= 2){
-        promise<string> order;
-        unsigned short port = stoi(argv[1]);
+            tcp::socket l_sock{ctx};
+            acceptor.accept(l_sock);
+            string l_order = message_utils::recieve_message(move(l_sock));
+            cout << "lieutenants order is: " << l_order << endl;
+        }
+    private:
+        unsigned short port;
+        string neighbour_port;
+};
 
-        thread tsender{sender, ref(order)};
-        thread treciever{reciever, port, ref(order)};
+int main([[maybe_unused]]int argc, char* argv[]){
+    unsigned short p = stoi(argv[1]);
+    Lieutenant l{p, argv[2]};
 
-        tsender.detach();
-        treciever.join();
-    }
+    thread treciever{l};
+
+    treciever.join();
 }

@@ -1,2 +1,3 @@
-option('spdlog_include_dir', type : 'string', value : '')
+option('spdlog_include_dir', type : 'string', value : '/Users/matthias/Documents/schule/5/pos/spdlog/build')
+option('cli11_include_dir', type : 'string', value : '/Users/matthias/Documents/schule/5/pos/beispiele/reumann_i10597/cli11')
 option('asio_include_dir', type : 'string', value : '/Users/matthias/Documents/schule/5/nvs/asio-1.14.0/include')

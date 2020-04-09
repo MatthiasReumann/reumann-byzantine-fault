@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
-#include <future>
+#include <vector>
+#include "spdlog/spdlog.h"
 #include "asio.hpp"
 #include "CLI11.hpp"
 #include "message_utils.h"
@@ -11,20 +12,23 @@ using namespace CLI;
 
 class Lieutenant{
     public:
-        Lieutenant(unsigned short port, string neighbour_port, bool isTraitor) : port{port}, neighbour_port{neighbour_port}, isTraitor{isTraitor}{}
+        Lieutenant(unsigned short port, string neighbour_port, bool isTraitor) : port{port}, 
+            neighbour_port{neighbour_port}, isTraitor{isTraitor}{}
 
-        void operator()(){
+        void start(){
             asio::io_context ctx;
             tcp::endpoint ep{tcp::v4(), this->port};
             tcp::acceptor acceptor{ctx, ep};
             acceptor.listen();
-
-            cout << "waiting for order..." << endl;
+            spdlog::info("Waiting for order...");
 
             tcp::socket com_sock{ctx};
             acceptor.accept(com_sock);
             string com_order = message_utils::recieve_message(move(com_sock));
-            cout << "commanders order is: " << com_order << endl;
+
+            this->votes.push_back(com_order);
+
+            spdlog::info("Commander sent '{}' order", com_order);
 
             if(isTraitor){
                 if(com_order == message::ATTACK){
@@ -33,16 +37,33 @@ class Lieutenant{
                     com_order = message::ATTACK;
                 }
             }
-
+            
+            spdlog::info("Send '{}' order to neighbour", com_order);
             thread t{message_utils::send_message, com_order, this->neighbour_port};
             t.detach();
+
+            spdlog::info("Waiting for neigbour's order...");
 
             tcp::socket l_sock{ctx};
             acceptor.accept(l_sock);
             string l_order = message_utils::recieve_message(move(l_sock));
-            cout << "lieutenants order is: " << l_order << endl;
+
+            this->votes.push_back(l_order);
+
+            spdlog::info("Neighbours order is '{}'", l_order);
+
+            this->majority();
         }
+
     private:
+        void majority(){
+            spdlog::info("Picking the majority of:");
+            for(auto vote : votes){
+                spdlog::info(vote);
+            }
+        }
+        
+        vector<string> votes;
         unsigned short port;
         string neighbour_port;
         bool isTraitor;
@@ -61,8 +82,5 @@ int main(int argc, char* argv[]){
     CLI11_PARSE(app, argc, argv);
 
     Lieutenant l{port, neighbour_port, isTraitor};
-
-    thread treciever{l}; //thread is basically useless here
-
-    treciever.join();
+    l.start();
 }

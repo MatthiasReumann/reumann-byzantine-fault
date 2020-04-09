@@ -1,7 +1,10 @@
 #pragma once 
 #include <iostream>
 #include <string>
+#include "spdlog/spdlog.h"
 #include "asio.hpp"
+
+typedef std::string Order;
 
 namespace message_utils{
     void send_message(std::string msg, std::string port){

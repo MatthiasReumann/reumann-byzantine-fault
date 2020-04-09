@@ -10,12 +10,12 @@ using namespace std;
 using namespace asio::ip;
 using namespace CLI;
 
-class Lieutenant{
+class Lieutenant {
     public:
         Lieutenant(unsigned short port, string neighbour_port, bool isTraitor) : port{port}, 
-            neighbour_port{neighbour_port}, isTraitor{isTraitor}{}
+            neighbour_port{neighbour_port}, isTraitor{isTraitor} {}
 
-        void start(){
+        void start() {
             asio::io_context ctx;
             tcp::endpoint ep{tcp::v4(), this->port};
             tcp::acceptor acceptor{ctx, ep};
@@ -56,10 +56,14 @@ class Lieutenant{
         }
 
     private:
-        void majority(){
-            spdlog::info("Picking the majority of:");
-            for(auto vote : votes){
-                spdlog::info(vote);
+        void majority() {
+            if(isTraitor) {
+                spdlog::info("Lieutnant is a traitor. The majority doesn't matter.");
+            }else{
+                spdlog::info("Picking the majority of:");
+                for(auto vote : votes) {
+                    spdlog::info(vote);
+                }
             }
         }
         
@@ -69,7 +73,7 @@ class Lieutenant{
         bool isTraitor;
 };
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
     bool isTraitor{false};
     unsigned short port;
     string neighbour_port;

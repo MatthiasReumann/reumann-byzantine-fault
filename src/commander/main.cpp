@@ -7,7 +7,7 @@
 using namespace std;
 using namespace CLI;
 
-void send_order(Order order, string lname, string port){
+void send_order(string order, string lname, string port){
     spdlog::info("Sending order '{}' to {}", order, lname);
     message_utils::send_message(order, port);
 }

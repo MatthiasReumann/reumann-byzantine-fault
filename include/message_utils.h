@@ -4,8 +4,6 @@
 #include "spdlog/spdlog.h"
 #include "asio.hpp"
 
-typedef std::string Order;
-
 namespace message_utils{
     void send_message(std::string msg, std::string port){
         asio::ip::tcp::iostream strm{"localhost", port};
@@ -13,7 +11,7 @@ namespace message_utils{
             strm << msg << std::endl;
             strm.close();
         }else{
-            std::cerr << "no connection" << std::endl;
+            spdlog::error("no connection");
         }
     }
 

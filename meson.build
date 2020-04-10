@@ -20,7 +20,7 @@ executable('commander',
 
 leutnant_src = ['src/leutnant/main.cpp']
 
-executable('leutnant',
+executable('lieutenant',
            sources : leutnant_src,
             dependencies: threadd,
            include_directories : inc_dir

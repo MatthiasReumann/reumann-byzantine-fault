@@ -80,8 +80,8 @@ int main(int argc, char* argv[]) {
 
     App app{"Byzantine Fault"};
     app.add_flag("-t, --traitor", isTraitor, "Is traitor");
-    app.add_option("-p, --port", port, "Lieutnant port");
-    app.add_option("-n, --neighbour", neighbour_port, "Neighbour lieutnant port");
+    app.add_option("-p, --port", port, "Lieutnant port")->required();
+    app.add_option("-n, --neighbour", neighbour_port, "Neighbour lieutnant port")->required();
 
     CLI11_PARSE(app, argc, argv);
 

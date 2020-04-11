@@ -38,7 +38,7 @@ class Lieutenant {
                 }
             }
             
-            spdlog::info("Send '{}' order to neighbour", com_order);
+            spdlog::info("Sending '{}' order to neighbour", com_order);
             thread t{message_utils::send_message, com_order, this->neighbour_port};
             t.detach();
 
